@@ -2,57 +2,77 @@ package com.jabonesArtesanales.co.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Random;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ordenes")
 public class Ordenes implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_pedidos;
+    private static final long serialVersionUID = 1L;
 
-	private long numeroPedido;
-	private Date fechaPedido;
-	@Enumerated(EnumType.STRING)
-	private DetallesOrden estado;
-	@Enumerated(EnumType.STRING)
-	private Pagos metodoPago;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_pedidos;
 
-	public Ordenes(long numeroPedido, Date fechaPedido, DetallesOrden estado, Pagos metodoPago) {
-		this.numeroPedido = numeroPedido;
-		this.fechaPedido = fechaPedido;
-		this.estado = estado;
-		this.metodoPago = metodoPago;
+    private Long numeroPedido;
+
+    private Date fechaPedido;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoDetalleOrden estado;
+
+    @Enumerated(EnumType.STRING)
+    private Pagos metodoPago;
+
+    @ManyToMany
+    @JoinTable(
+        name = "pedido_producto",
+        joinColumns = @JoinColumn(name = "id_pedidos"),
+        inverseJoinColumns = @JoinColumn(name = "id_productos")
+    )
+    private Set<Producto> productos;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Envios> envios;
+
+    /**
+     * Método para generar un número de pedido aleatorio
+     * Puedes llamarlo desde el servicio o constructor si quieres.
+     */
+    public void generarNumeroPedido() {
+        long min = 100000000L;
+        long max = 999999999L;
+        this.numeroPedido = (long) (Math.random() * (max - min + 1) + min);
+    }
+
+	public Long getId_pedidos() {
+		return id_pedidos;
 	}
 
-	public long getNumeroPedido() {
+	public void setId_pedidos(Long id_pedidos) {
+		this.id_pedidos = id_pedidos;
+	}
+
+	public Long getNumeroPedido() {
 		return numeroPedido;
 	}
 
-	public void setNumeroPedido(long numeroPedido) {
-		Random random = new Random();
-
-		this.numeroPedido = random.nextLong(100000000L, 999999999L);
+	public void setNumeroPedido(Long numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
 
 	public Date getFechaPedido() {
@@ -63,11 +83,11 @@ public class Ordenes implements Serializable {
 		this.fechaPedido = fechaPedido;
 	}
 
-	public DetallesOrden getEstado() {
+	public EstadoDetalleOrden getEstado() {
 		return estado;
 	}
 
-	public void setEstado(DetallesOrden estado) {
+	public void setEstado(EstadoDetalleOrden estado) {
 		this.estado = estado;
 	}
 
@@ -79,47 +99,29 @@ public class Ordenes implements Serializable {
 		this.metodoPago = metodoPago;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-    @ManyToMany
-    @JoinTable(
-        name = "pedido_producto",
-        joinColumns = @JoinColumn(name = "id_pedidos"),
-        inverseJoinColumns = @JoinColumn(name = "id_productos")
-    )
-    private Set<Producto> productos;
-    
-    public Set<Producto> getProductos() {
-        return productos;
-    }
+	public Set<Producto> getProductos() {
+		return productos;
+	}
 
-    public void setProductos(Set<Producto> productos) {
-        this.productos = productos;
-    }
-    
-    @ManyToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
-    
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
+	}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Envios> envios;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Set<Envios> getEnvios() {
+		return envios;
+	}
+
+	public void setEnvios(Set<Envios> envios) {
+		this.envios = envios;
+	}
+     
     
-    public Set<Envios> getEnvios() {
-        return envios;
-    }
-
-    public void setEnvios(Set<Envios> envios) {
-        this.envios = envios;
-    }
 }

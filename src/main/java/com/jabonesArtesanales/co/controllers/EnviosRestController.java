@@ -113,7 +113,7 @@ Map<String, Object> response = new HashMap<>();
 		}
 		
 		try {
-			enviosActual.setDireccionEnvio(envios.getDireccionEnvio());
+			enviosActual.setDireccionCiudad(envios.getDireccionCiudad());
 			enviosActual.setEstadoEnvio(envios.getEstadoEnvio());
 			enviosActual.setFechaEnvio(envios.getFechaEnvio());
 			enviosActual.setNumeroPedido(envios.getNumeroPedido());

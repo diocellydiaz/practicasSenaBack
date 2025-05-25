@@ -16,27 +16,45 @@ import lombok.Data;
 @Builder
 @Entity
 @Table(name = "cliente")
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_cliente")
-	private long idCliente;
-	@NotEmpty(message = "No puede estar vacio")
-	@Size(min = 4 , max=20, message = "el tamaño tiene que estar entre 4 y 12")
-	@Column(nullable = false)
-	private String nombre;
-	@NotEmpty(message = "No puede estar vacio")
-	private String apellido;
-	@NotNull(message = "No puede estar vacio")
-	@Min(value = 1, message = "La cédula debe ser un número positivo")
-	private Integer  cedula;
-	@NotEmpty(message = "No puede estar vacio")
-	@Email
-	@Column(nullable = false, unique = true)
-	private String correoElectronico;
-	@NotEmpty(message = "No puede estar vacio")
-	private String telefono;
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
+    private Long idCliente;
+
+    @NotEmpty(message = "No puede estar vacío")
+    @Size(min = 4, max = 20, message = "El tamaño tiene que estar entre 4 y 20")
+    @Column(nullable = false)
+    private String nombre;
+
+    @NotEmpty(message = "No puede estar vacío")
+    private String apellido;
+
+    @NotNull(message = "No puede estar vacío")
+    @Min(value = 1, message = "La cédula debe ser un número positivo")
+    private Integer cedula;
+
+    @NotEmpty(message = "No puede estar vacío")
+    @Email(message = "Debe ser un correo electrónico válido")
+    @Column(nullable = false, unique = true)
+    private String correoElectronico;
+
+    @NotEmpty(message = "No puede estar vacío")
+    private String telefono;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Producto> productos;
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -54,11 +72,11 @@ public class Cliente implements Serializable{
 		this.apellido = apellido;
 	}
 
-	public int getCedula() {
+	public Integer getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(int cedula) {
+	public void setCedula(Integer cedula) {
 		this.cedula = cedula;
 	}
 
@@ -78,19 +96,14 @@ public class Cliente implements Serializable{
 		this.telefono = telefono;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
-	private List<Producto> productos;
-	
-	public List<Producto> getProductos(){
+	public List<Producto> getProductos() {
 		return productos;
 	}
+
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
-	
+    
+    
+    
 }

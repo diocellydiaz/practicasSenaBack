@@ -1,33 +1,39 @@
 package com.jabonesArtesanales.co.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="inventario")
-public class Inventario {
-	
-	private int stock;
-	
-	
-	
-    public int getStock() {
-		return stock;
-	}
+@Table(name = "inventario")
+public class Inventario implements Serializable {
 
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    private Integer productoID;
 
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-
-
-	@OneToOne
-    @JoinColumn(name = "ProductoID")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "productoID")
     private Producto producto;
-	
 
+    private int stock;
+    
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    
+    
+    
 }

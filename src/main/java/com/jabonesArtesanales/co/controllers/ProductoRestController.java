@@ -144,17 +144,19 @@ public class ProductoRestController {
 		try {
 			Producto productos = productosService.findById(id);
 			
-			String nombreFotoAnterior = productos.getFoto(); 
-			
-			if(nombreFotoAnterior !=null && nombreFotoAnterior.length()>0) {
-				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-				if(archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-					archivoFotoAnterior.delete();
-				}
+			String nombreFotoAnterior = productos.getNombrefoto();
+
+			if (nombreFotoAnterior != null && !nombreFotoAnterior.isEmpty()) {
+			    Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+			    File archivoFotoAnterior = rutaFotoAnterior.toFile();
+			    if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+			        archivoFotoAnterior.delete();
+			    }
 			}
-			
+
+
 			productosService.delete(id);
+
 		}catch(DataAccessException ex) {
 			response.put("mensaje", "Error al realizar al borrar en la Base de Datos");
 			response.put("mensaje", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
@@ -174,7 +176,7 @@ public class ProductoRestController {
 			String nombreArchivo = UUID.randomUUID().toString()+ "_" + archivo.getOriginalFilename().replace(" ","");
 			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
 			log.info(rutaArchivo.toString());
-			
+				
 			try {
 				Files.copy(archivo.getInputStream(), rutaArchivo);
 			} catch (IOException e) {
@@ -184,18 +186,19 @@ public class ProductoRestController {
 				
 			}
 			
-			String nombreFotoAnterior = productos.getFoto(); 
-			
-			if(nombreFotoAnterior !=null && nombreFotoAnterior.length()>0) {
-				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-				if(archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-					archivoFotoAnterior.delete();
-				}
+			String nombreFotoAnterior = productos.getNombrefoto(); 
+
+			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+			    Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior.toString()).toAbsolutePath();
+			    File archivoFotoAnterior = rutaFotoAnterior.toFile();
+			    if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+			        archivoFotoAnterior.delete();
+			    }
 			}
-			
-			productos.setFoto(nombreArchivo);
+
+			productos.setNombrefoto(nombreFotoAnterior);
 			productosService.save(productos);
+
 			
 			response.put("Productos",productos);
 			response.put("mensaje", "has subido correctamente la imagen: "+ nombreArchivo);
@@ -205,7 +208,7 @@ public class ProductoRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/uploads/img/{nombreFoto:.+}")
+@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
 		
 		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
@@ -228,8 +231,8 @@ public class ProductoRestController {
 	}
 	
 	@PutMapping("/productos/{id}/reducir-stock")
-	public ResponseEntity<String>reducirStock(@PathVariable Long id, @RequestParam int cantidad){
-		boolean actualizado = productosService.reducirStock(id, cantidad);
+	public ResponseEntity<String>reducirStock(@PathVariable Long id, @RequestParam int cantidad, Producto producto){
+		boolean actualizado = productosService.reducirStock(id, cantidad, producto);
 		
 		if(actualizado) {
 			return ResponseEntity.ok("Stock reducido correctamente.");

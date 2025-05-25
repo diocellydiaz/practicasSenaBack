@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jabonesArtesanales.co.dao.IPedidoDAO;
+import com.jabonesArtesanales.co.dao.IOrdenesDAO;
 import com.jabonesArtesanales.co.entity.Ordenes;
 
 @Service
-public class PedidosServiceImpl implements IPedidosService{
+public class OrdenesServiceImpl implements IOrdenesService{
 
 	@Autowired
-	private IPedidoDAO pedidoDAO;
+	private IOrdenesDAO pedidoDAO;
 
 	@Override
 	public List<Ordenes> findAll() {

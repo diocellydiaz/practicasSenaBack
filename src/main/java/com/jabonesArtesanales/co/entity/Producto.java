@@ -2,7 +2,7 @@ package com.jabonesArtesanales.co.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,93 +13,66 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
 @Entity
-@Table(name ="producto")
-public class Producto implements Serializable{
-	
+@Table(name = "producto")
+public class Producto implements Serializable {
 
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Integer productoID;
+    private static final long serialVersionUID = 1L;
 
-	    private String nombre;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer productoID;
 
-	    @Column(columnDefinition = "TEXT")
-	    private String descripcion;
+    private String nombre;
 
-	    private BigDecimal precio;
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
 
-	    private Inventario inventarios;
-	    
-	    @ManyToOne
-	    @JoinColumn(name = "categoriaID")
-	    private Categorias categoria;
+    private BigDecimal precio;
 
-	    @ManyToOne
-	    @JoinColumn(name = "proveedorID")
-	    private Proveedores proveedor;
-	    
-	    @ManyToOne
-	    @JoinColumn(name="inventarioId")
-	    private Inventario inventario;
+    @Column(name = "nombre_foto")
+    private String nombrefoto;
 
-	    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-	    private Set<DetallesOrden> detallesOrden;
+    @ManyToOne
+    @JoinColumn(name = "clienteID")
+    private Cliente cliente;
 
-	    // Getters y setters
+    @ManyToOne
+    @JoinColumn(name = "categoriaID")
+    private Categorias categoria;
 
-	    public Integer getProductoID() {
-	        return productoID;
-	    }
+    @ManyToOne
+    @JoinColumn(name = "proveedorID")
+    private Proveedores proveedor;
 
-	    public void setProductoID(Integer productoID) {
-	        this.productoID = productoID;
-	    }
+    @ManyToOne
+    @JoinColumn(name = "inventario_id")
+    private Inventario inventario;
 
-	    public String getNombre() {
-	        return nombre;
-	    }
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<DetallesOrden> detallesOrden;
 
-	    public void setNombre(String nombre) {
-	        this.nombre = nombre;
-	    }
+    public Inventario getInventario() {
+        return inventario;
+    }
 
-	    public String getDescripcion() {
-	        return descripcion;
-	    }
-
-	    public void setDescripcion(String descripcion) {
-	        this.descripcion = descripcion;
-	    }
-
-	    public BigDecimal getPrecio() {
-	        return precio;
-	    }
-
-	    public void setPrecio(BigDecimal precio) {
-	        this.precio = precio;
-	    }
- 
-	    
-	    public Inventario getInventario() {
-			return inventarios;
-		}
-
-		public void setInventario(Inventario inventarios) {
-			this.inventario = inventarios;
-		}
-
-
-
-
-
-		private static final long serialVersionUID = 1L;
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+    
+    public String getNombrefoto() {
+		return nombrefoto;
 	}
-
+    
+    public void setNombrefoto(String nombrefoto) {
+		this.nombrefoto = nombrefoto;
+	}
+    
+}

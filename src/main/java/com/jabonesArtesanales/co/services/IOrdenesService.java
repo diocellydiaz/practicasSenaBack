@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jabonesArtesanales.co.entity.Ordenes;
 
-public interface IPedidosService {
+public interface IOrdenesService {
 	
 	public List<Ordenes> findAll();
 	public Ordenes findById(long Id);
