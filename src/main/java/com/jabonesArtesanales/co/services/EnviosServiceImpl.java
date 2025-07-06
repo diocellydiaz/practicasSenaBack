@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.jabonesArtesanales.co.dao.IEnvioDAO;
+import com.jabonesArtesanales.co.dao.IEnviosDao;
 import com.jabonesArtesanales.co.entity.Envios;
 
 @Service
 public class EnviosServiceImpl implements IEnviosService {
 
 	@Autowired
-	private IEnvioDAO envioDao;
+	private IEnviosDao envioDao;
 
 	@Override
 	public List<Envios> findAll() {

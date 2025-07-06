@@ -71,4 +71,20 @@ public class Categorias implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+
+
+
+	public Object getProducto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	public void setProducto(Object producto) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

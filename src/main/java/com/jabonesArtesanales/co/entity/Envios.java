@@ -126,6 +126,22 @@ public class Envios implements Serializable {
 	public void setPedido(Ordenes pedido) {
 		this.pedido = pedido;
 	}
+
+	public Object getOrdenID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setOrdenID(Object ordenID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public Object getOrdenID1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
 

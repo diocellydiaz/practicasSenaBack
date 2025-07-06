@@ -34,70 +34,66 @@ public class EnviosRestController {
 	private IEnviosService enviosService;
 	
 	@GetMapping("/envios")
-	public  List<Envios> index(){
+	public List<Envios> index(){
 		return enviosService.findAll();
 	}
 	
 	@GetMapping("/envios/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id){
 		Envios envios = null;
-		Map<String, Object> response= new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
 		
 		try {
 			envios = enviosService.findById(id);
-		}catch(DataAccessException ex) {
+		} catch(DataAccessException ex) {
 			response.put("mensaje", "Error al realizar la consulta en la Base de Datos");
-			response.put("mensaje", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+			response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-			
 		}
 		
 		if(envios == null) {
-			response.put("mensaje", " El envio con el ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			response.put("mensaje", "El envío con el ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Envios>(envios,HttpStatus.OK);
-		
+		return new ResponseEntity<Envios>(envios, HttpStatus.OK);
 	}
 	
 	@PostMapping("/envios")
 	public ResponseEntity<?> create(@Valid @RequestBody Envios envios, BindingResult result){
 		Envios enviosNew = null;
-		
 		Map<String, Object> response = new HashMap<>();
 		
 		if (result.hasErrors()) {
-	        List<String> errors = result.getFieldErrors()
-	                .stream()
-	                .map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
-	                .collect(Collectors.toList());
+			List<String> errors = result.getFieldErrors()
+					.stream()
+					.map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
+					.collect(Collectors.toList());
 
-	        response.put("errors", errors);
-	        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	    }
+			response.put("errors", errors);
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
 		
 		try {
 			enviosNew = enviosService.save(envios);
-		}catch(DataAccessException ex) {
+		} catch(DataAccessException ex) {
 			response.put("mensaje", "Error al realizar el insert en la Base de Datos");
-			response.put("mensaje", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+			response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("menesaje", "El envio ha sido creado con exito");
+		
+		response.put("mensaje", "El envío ha sido creado con éxito");
 		response.put("envio", enviosNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/envios/{id}")
-	public ResponseEntity<?>update(@Valid @RequestBody Envios envios, BindingResult result, @PathVariable Long id){
+	public ResponseEntity<?> update(@Valid @RequestBody Envios envios, BindingResult result, @PathVariable Long id){
 		Envios enviosActual = enviosService.findById(id);
 		Envios enviosUpdate = null;
-		
-Map<String, Object> response = new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
 		
 		if(result.hasErrors()) {
-
 			List<String> errors = result.getFieldErrors()
 					.stream()
 					.map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
@@ -108,41 +104,43 @@ Map<String, Object> response = new HashMap<>();
 		}
 		
 		if(enviosActual == null) {
-			response.put("mensaje", "Error : no se puede editar,  el envio con el  ID: ".concat(id.toString().concat(" No existe en la base de Datos!")));
+			response.put("mensaje", "Error: no se puede editar, el envío con el ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		try {
-			enviosActual.setDireccionCiudad(envios.getDireccionCiudad());
-			enviosActual.setEstadoEnvio(envios.getEstadoEnvio());
+
+			enviosActual.setOrdenID(envios.getOrdenID());
 			enviosActual.setFechaEnvio(envios.getFechaEnvio());
-			enviosActual.setNumeroPedido(envios.getNumeroPedido());
-			enviosActual.setPedido(envios.getPedido());
-			enviosActual.setTelefonoContacto(envios.getTelefonoContacto());
+			enviosActual.setDireccionCalle(envios.getDireccionCiudad());
+			enviosActual.setEstadoEnvio(envios.getEstadoEnvio());
 			
 			enviosUpdate = enviosService.save(enviosActual);
-		}catch(DataAccessException ex) {
-			response.put("mensaje", "Error al realizar al actualizar en la Base de Datos");
-			response.put("mensaje", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+		} catch(DataAccessException ex) {
+			response.put("mensaje", "Error al actualizar en la Base de Datos");
+			response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje","El envio se ha actualizado con exito");
-		response.put("Envio", enviosUpdate);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		
+		response.put("mensaje", "El envío se ha actualizado con éxito");
+		response.put("envio", enviosUpdate);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/envios/{}")
-	public ResponseEntity<?>delete(@PathVariable Long id){
+	@DeleteMapping("/envios/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
+		
 		try {
 			enviosService.delete(id);
-		}catch(DataAccessException ex) {
-			response.put("mensaje", "Error al realizar al borrar en la Base de Datos");
-			response.put("mensaje", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
+		} catch(DataAccessException ex) {
+			response.put("mensaje", "Error al eliminar en la Base de Datos");
+			response.put("error", ex.getMessage().concat(": ").concat(ex.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El envio ha eliminado con exito");
-
+		
+		response.put("mensaje", "El envío ha sido eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 }
+

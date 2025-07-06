@@ -71,8 +71,58 @@ public class Producto implements Serializable {
 		return nombrefoto;
 	}
     
-    public void setNombrefoto(String nombrefoto) {
-		this.nombrefoto = nombrefoto;
+    public void setNombrefoto(Object object) {
+		this.nombrefoto = (String) object;
+	}
+
+	public Object getCategoriasID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setCategoriasID(Object categoriasID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getProveedorID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setProveedorID(Object proveedorID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getPrecio() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setPrecio(Object precio2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getDescripcion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setDescripcion(Object descripcion2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object getCategoriaID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
     
 }
