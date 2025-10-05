@@ -19,3 +19,4 @@ EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 ENV MAVEN_OPTS="-Xmx512m"
+ENV MAVEN_OPTS="-Dfile.encoding=UTF-8"
