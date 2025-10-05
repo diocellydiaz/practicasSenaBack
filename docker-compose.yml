@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  jabones-app:
+    build: .
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MYSQLHOST: ${MYSQLHOST}
+      MYSQLPORT: ${MYSQLPORT}
+      MYSQLDATABASE: ${MYSQLDATABASE}
+      MYSQLUSER: ${MYSQLUSER}
+      MYSQLPASSWORD: ${MYSQLPASSWORD}
+      PORT: ${PORT}
+    ports:
+      - "${PORT:-8080}:8080"
