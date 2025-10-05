@@ -1,0 +1,8 @@
+[build]
+builder = "Dockerfile"
+
+[env]
+SPRING_PROFILES_ACTIVE = "prod"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"
