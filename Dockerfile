@@ -1,22 +1,20 @@
-# ==========================
-# Etapa 1: Build
-# ==========================
-FROM maven:3.9.9-eclipse-temurin-17 AS build
+# ===== build =====
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
+COPY pom.xml .
+RUN mvn -q -e -DskipTests dependency:go-offline
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn -q -DskipTests package
 
-# ==========================
-# Etapa 2: Run
-# ==========================
-FROM eclipse-temurin:17-jdk
+# ===== run =====
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
 
-# Usa el puerto que Railway expone dinámicamente
+# Opciones para memory limits típicos de Railway
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75.0 -XX:+UseG1GC"
+# Railway inyecta PORT, Spring lo leerá con server.port=${PORT:8080}
 ENV PORT=8080
-EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
-ENV MAVEN_OPTS="-Xmx512m"
-ENV MAVEN_OPTS="-Dfile.encoding=UTF-8"
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app.jar"]
