@@ -11,7 +11,7 @@ import com.jabonesArtesanales.co.entity.Inventario;
 @Service
 public class InventarioServiceImpl implements IInventarioService {
 	
-	@Autowired
+	@Autowired(required=true)
 	private IInventarioDAO inventarioDao;
 
 	@Override
