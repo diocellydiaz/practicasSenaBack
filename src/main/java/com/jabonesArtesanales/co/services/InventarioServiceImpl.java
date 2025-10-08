@@ -3,10 +3,12 @@ package com.jabonesArtesanales.co.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jabonesArtesanales.co.dao.IInventarioDAO;
 import com.jabonesArtesanales.co.entity.Inventario;
 
+@Service
 public class InventarioServiceImpl implements IInventarioService {
 	
 	@Autowired
