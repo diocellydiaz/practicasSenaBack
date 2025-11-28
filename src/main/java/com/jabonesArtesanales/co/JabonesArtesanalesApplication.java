@@ -7,15 +7,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EntityScan(basePackages = {
-	    "com.jabonesArtesanales.co.domain",     // <-- ajusta al paquete real de tus @Entity
-	})
-	@EnableJpaRepositories(basePackages = {
-	    "com.jabonesArtesanales.co.repository"  // <-- ajusta al paquete real de tus repos
-	})
+    "com.jabonesArtesanales.co.entity"
+})
+@EnableJpaRepositories(basePackages = {
+    "com.jabonesArtesanales.co.dao"
+})
 public class JabonesArtesanalesApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JabonesArtesanalesApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(JabonesArtesanalesApplication.class, args);
+    }
 
 }
+
