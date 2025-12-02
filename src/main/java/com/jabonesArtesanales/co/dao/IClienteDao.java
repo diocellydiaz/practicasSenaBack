@@ -6,6 +6,6 @@ import com.jabonesArtesanales.co.entity.Cliente;
 
 public interface IClienteDao extends JpaRepository<Cliente, Long> {
 
-	Cliente findByEmail(String correoElectronico);
+	Cliente findByCorreoElectronico(String correoElectronico);
 
 }

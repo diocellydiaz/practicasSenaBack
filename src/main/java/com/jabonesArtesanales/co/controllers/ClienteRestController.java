@@ -157,7 +157,7 @@ public class ClienteRestController {
 
 	    Map<String, Object> response = new HashMap<>();
 
-	    Cliente cliente = clienteService.findByEmail(correoElectronico);
+	    Cliente cliente = clienteService.findByCorreoElectronico(correoElectronico);
 
 	    if (cliente == null) {
 	        response.put("mensaje", "Cliente no encontrado");
