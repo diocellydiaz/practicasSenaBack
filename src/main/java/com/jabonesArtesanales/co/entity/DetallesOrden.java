@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +30,7 @@ public class DetallesOrden implements Serializable {
     @ManyToOne
     @JoinColumn(name = "producto_id")
     @JsonBackReference
+    @JsonIgnore
     private Producto producto;
 
     @ManyToOne
