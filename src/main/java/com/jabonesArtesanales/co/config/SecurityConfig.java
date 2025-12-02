@@ -15,7 +15,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 // deja públicos los endpoints de tu API por ahora
-                .requestMatchers("/api/productos/**").permitAll()
+                .requestMatchers("/api/productos").permitAll()
                 // si tienes otros endpoints públicos, los agregas aquí
                 .anyRequest().permitAll()
             );
