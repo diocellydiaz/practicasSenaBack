@@ -42,8 +42,8 @@ public class ClienteServiceImpl implements IClienteService{
 		clienteDao.deleteById(id);
 	}
 	
-    public Cliente findByEmail(String email) {
-        return clienteDao.findByEmail(email);
+    public Cliente findByEmail(String correoElectronico) {
+        return clienteDao.findByEmail(correoElectronico);
     }
 
 }

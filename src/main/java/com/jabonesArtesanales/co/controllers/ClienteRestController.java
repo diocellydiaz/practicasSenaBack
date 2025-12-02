@@ -152,12 +152,12 @@ public class ClienteRestController {
 	
 	@PostMapping("/clientes/login")
 	public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
-	    String email = body.get("email");
+	    String correoElectronico = body.get("email");
 	    String password = body.get("password");
 
 	    Map<String, Object> response = new HashMap<>();
 
-	    Cliente cliente = clienteService.findByEmail(email);
+	    Cliente cliente = clienteService.findByEmail(correoElectronico);
 
 	    if (cliente == null) {
 	        response.put("mensaje", "Cliente no encontrado");
