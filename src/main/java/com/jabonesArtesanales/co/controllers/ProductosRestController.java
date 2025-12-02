@@ -129,8 +129,8 @@ public class ProductosRestController {
 			productoActual.setNombrefoto(producto.getNombrefoto());
 			productoActual.setDescripcion(producto.getDescripcion());
 			productoActual.setPrecio(producto.getPrecio());
-			productoActual.setCategoriasID(producto.getCategoriaID());
-			productoActual.setProveedorID(producto.getProveedorID());
+			productoActual.setCategoria(producto.getCategoria());
+			productoActual.setProveedor(producto.getProveedor());
 			
 			if(producto.getNombrefoto() != null) {
 				productoActual.setNombrefoto(producto.getNombrefoto());
