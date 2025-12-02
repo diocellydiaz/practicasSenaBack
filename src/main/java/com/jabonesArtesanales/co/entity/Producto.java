@@ -59,7 +59,8 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetallesOrden> detallesOrden;
     
-    
+    public Producto() {
+    }
 
 	public Producto(Long productoID, String nombre, String descripcion, BigDecimal precio, String nombrefoto,
 			Cliente cliente, Categorias categoria, Proveedores proveedor, Inventario inventario,
