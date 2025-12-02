@@ -58,71 +58,109 @@ public class Producto implements Serializable {
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetallesOrden> detallesOrden;
-
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
     
-    public String getNombrefoto() {
+    
+
+	public Producto(Integer productoID, String nombre, String descripcion, BigDecimal precio, String nombrefoto,
+			Cliente cliente, Categorias categoria, Proveedores proveedor, Inventario inventario,
+			List<DetallesOrden> detallesOrden) {
+		super();
+		this.productoID = productoID;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.nombrefoto = nombrefoto;
+		this.cliente = cliente;
+		this.categoria = categoria;
+		this.proveedor = proveedor;
+		this.inventario = inventario;
+		this.detallesOrden = detallesOrden;
+	}
+
+	public Integer getProductoID() {
+		return productoID;
+	}
+
+	public void setProductoID(Integer productoID) {
+		this.productoID = productoID;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
+	}
+
+	public String getNombrefoto() {
 		return nombrefoto;
 	}
+
+	public void setNombrefoto(String nombrefoto) {
+		this.nombrefoto = nombrefoto;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Categorias getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categorias categoria) {
+		this.categoria = categoria;
+	}
+
+	public Proveedores getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedores proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public Inventario getInventario() {
+		return inventario;
+	}
+
+	public void setInventario(Inventario inventario) {
+		this.inventario = inventario;
+	}
+
+	public List<DetallesOrden> getDetallesOrden() {
+		return detallesOrden;
+	}
+
+	public void setDetallesOrden(List<DetallesOrden> detallesOrden) {
+		this.detallesOrden = detallesOrden;
+	}
+
     
-    public void setNombrefoto(Object object) {
-		this.nombrefoto = (String) object;
-	}
-
-	public Object getCategoriasID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setCategoriasID(Object categoriasID) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getProveedorID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setProveedorID(Object proveedorID) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getPrecio() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setPrecio(Object precio2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getNombre() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getDescripcion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setDescripcion(Object descripcion2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Object getCategoriaID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    
+    
+    
+   
     
 }
