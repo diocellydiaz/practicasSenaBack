@@ -1,4 +1,4 @@
-package com.jabonesArtesanales.co.controllers;
+  package com.jabonesArtesanales.co.controllers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +33,9 @@ public class ClienteRestController {
 	
 	@Autowired
 	private IClienteService clienteService;
+	
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/clientes")
 	public List<Cliente> index(){
@@ -145,4 +149,33 @@ public class ClienteRestController {
 		response.put("mensaje", "El cliente se ha eliminado con exito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
+	
+	@PostMapping("/clientes/login")
+	public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
+	    String email = body.get("email");
+	    String password = body.get("password");
+
+	    Map<String, Object> response = new HashMap<>();
+
+	    Cliente cliente = clienteService.findByEmail(email);
+
+	    if (cliente == null) {
+	        response.put("mensaje", "Cliente no encontrado");
+	        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+	    }
+
+	    if (!passwordEncoder.matches(password, cliente.getPassword())) {
+	        response.put("mensaje", "Contraseña incorrecta");
+	        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+	    }
+
+	    // 👇 Puedes devolver solo datos básicos (sin password)
+	    cliente.setPassword(null);
+
+	    response.put("mensaje", "Login correcto");
+	    response.put("cliente", cliente);
+
+	    return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 }

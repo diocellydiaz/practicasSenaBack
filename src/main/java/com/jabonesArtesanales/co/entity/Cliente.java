@@ -44,6 +44,8 @@ public class Cliente implements Serializable {
 
     @NotEmpty(message = "No puede estar vacío")
     private String telefono;
+    
+    private String password;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Producto> productos;
@@ -94,6 +96,14 @@ public class Cliente implements Serializable {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Producto> getProductos() {
