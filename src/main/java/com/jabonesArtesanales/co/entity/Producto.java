@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,6 +59,7 @@ public class Producto implements Serializable {
     private Inventario inventario;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<DetallesOrden> detallesOrden;
     
     public Producto() {
