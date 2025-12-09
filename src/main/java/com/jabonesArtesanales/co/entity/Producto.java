@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,9 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-
-
 
 @Entity
 @Table(name = "producto")
@@ -55,111 +54,117 @@ public class Producto implements Serializable {
     private Inventario inventario;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @JsonIgnore   // 👈 IMPORTANTÍSIMO: que no intente cargar la colección LAZY al convertir a JSON
     private List<DetallesOrden> detallesOrden;
-    
+
+    // ====== CONSTRUCTORES ======
+
     public Producto() {
     }
 
-	public Producto(Long productoID, String nombre, String descripcion, BigDecimal precio, String nombrefoto,
-			Cliente cliente, Categorias categoria, Proveedores proveedor, Inventario inventario,
-			List<DetallesOrden> detallesOrden) {
-		super();
-		this.productoID = productoID;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.nombrefoto = nombrefoto;
-		this.cliente = cliente;
-		this.categoria = categoria;
-		this.proveedor = proveedor;
-		this.inventario = inventario;
-		this.detallesOrden = detallesOrden;
-	}
+    public Producto(
+            Long productoID,
+            String nombre,
+            String descripcion,
+            BigDecimal precio,
+            String nombrefoto,
+            Cliente cliente,
+            Categorias categoria,
+            Proveedores proveedor,
+            Inventario inventario,
+            List<DetallesOrden> detallesOrden) {
 
-	public Long getProductoID() {
-		return productoID;
-	}
+        this.productoID = productoID;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.nombrefoto = nombrefoto;
+        this.cliente = cliente;
+        this.categoria = categoria;
+        this.proveedor = proveedor;
+        this.inventario = inventario;
+        this.detallesOrden = detallesOrden;
+    }
 
-	public void setProductoID(Long productoID) {
-		this.productoID = productoID;
-	}
+    // ====== GETTERS y SETTERS ======
 
-	public String getNombre() {
-		return nombre;
-	}
+    public Long getProductoID() {
+        return productoID;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setProductoID(Long productoID) {
+        this.productoID = productoID;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public BigDecimal getPrecio() {
-		return precio;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public void setPrecio(BigDecimal precio) {
-		this.precio = precio;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	public String getNombrefoto() {
-		return nombrefoto;
-	}
+    public BigDecimal getPrecio() {
+        return precio;
+    }
 
-	public void setNombrefoto(String nombrefoto) {
-		this.nombrefoto = nombrefoto;
-	}
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
 
-	public Cliente getCliente() {
-		return cliente;
-	}
+    public String getNombrefoto() {
+        return nombrefoto;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public void setNombrefoto(String nombrefoto) {
+        this.nombrefoto = nombrefoto;
+    }
 
-	public Categorias getCategoria() {
-		return categoria;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public void setCategoria(Categorias categoria) {
-		this.categoria = categoria;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public Proveedores getProveedor() {
-		return proveedor;
-	}
+    public Categorias getCategoria() {
+        return categoria;
+    }
 
-	public void setProveedor(Proveedores proveedor) {
-		this.proveedor = proveedor;
-	}
+    public void setCategoria(Categorias categoria) {
+        this.categoria = categoria;
+    }
 
-	public Inventario getInventario() {
-		return inventario;
-	}
+    public Proveedores getProveedor() {
+        return proveedor;
+    }
 
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
-	}
+    public void setProveedor(Proveedores proveedor) {
+        this.proveedor = proveedor;
+    }
 
-	public List<DetallesOrden> getDetallesOrden() {
-		return detallesOrden;
-	}
+    public Inventario getInventario() {
+        return inventario;
+    }
 
-	public void setDetallesOrden(List<DetallesOrden> detallesOrden) {
-		this.detallesOrden = detallesOrden;
-	}
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
 
-    
-    
-    
-    
-   
-    
+    public List<DetallesOrden> getDetallesOrden() {
+        return detallesOrden;
+    }
+
+    public void setDetallesOrden(List<DetallesOrden> detallesOrden) {
+        this.detallesOrden = detallesOrden;
+    }
 }
