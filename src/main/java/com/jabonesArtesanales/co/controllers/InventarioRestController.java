@@ -26,7 +26,7 @@ import com.jabonesArtesanales.co.services.IInventarioService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins= {"https://jabonesartesanales_up.railway.app","http://localhost:4200"})
+@CrossOrigin(origins= {"https://jabonesartesanales.up.railway.app","http://localhost:4200"})
 @RestController
 @RequestMapping(value="/api")
 public class InventarioRestController {

@@ -2,6 +2,7 @@ package com.jabonesArtesanales.co.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,10 +14,10 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+            .cors(Customizer.withDefaults()) // 🔥 habilita CORS globalmente
             .authorizeHttpRequests(auth -> auth
-                // deja públicos los endpoints de tu API por ahora
                 .requestMatchers("/api/productos/**").permitAll()
-                // si tienes otros endpoints públicos, los agregas aquí
+                .requestMatchers("/api/clientes/**").permitAll()
                 .anyRequest().permitAll()
             );
 
