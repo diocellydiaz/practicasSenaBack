@@ -1,17 +1,11 @@
 package com.jabonesArtesanales.co.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+
 @Entity
 @Table(name = "detalles_orden")
 public class DetallesOrden implements Serializable {
@@ -23,14 +17,38 @@ public class DetallesOrden implements Serializable {
     private Long id;
 
     private Integer cantidad;
+    
+   
 
-    @Enumerated(EnumType.STRING)
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public EstadoDetalleOrden getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoDetalleOrden estado) {
+		this.estado = estado;
+	}
+
+	@Enumerated(EnumType.STRING)
     private EstadoDetalleOrden estado;
 
     @ManyToOne
     @JoinColumn(name = "producto_id")
-    @JsonBackReference
-    @JsonIgnore
     private Producto producto;
 
     @ManyToOne

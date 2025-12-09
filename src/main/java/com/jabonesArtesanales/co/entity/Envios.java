@@ -4,11 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
 
-@Data
-@Builder
+
+
 @Entity
 @Table(name = "envio")
 public class Envios implements Serializable {
