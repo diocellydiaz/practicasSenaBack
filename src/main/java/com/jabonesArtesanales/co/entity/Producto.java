@@ -42,7 +42,7 @@ public class Producto implements Serializable {
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "categoriaID")
+    @JoinColumn(name = "categoriaid")
     private Categorias categoria;
 
     @ManyToOne

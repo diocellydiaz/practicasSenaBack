@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jabonesArtesanales.co.dao.IInventarioDAO;
 import com.jabonesArtesanales.co.dao.IProductoDao;
@@ -62,8 +63,8 @@ public class ProductosServiceImpl implements IProductosService {
     }
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Producto> findByCategoriaId(Long categoriaId) {
-		// TODO Auto-generated method stub
-		return null;
+		 return productoDao.findByCategoriaId(categoriaId);
 	}
 }
