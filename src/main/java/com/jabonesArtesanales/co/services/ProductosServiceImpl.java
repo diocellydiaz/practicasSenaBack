@@ -60,4 +60,10 @@ public class ProductosServiceImpl implements IProductosService {
             return false;
         }
     }
+
+	@Override
+	public List<Producto> findByCategoriaId(Long categoriaId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

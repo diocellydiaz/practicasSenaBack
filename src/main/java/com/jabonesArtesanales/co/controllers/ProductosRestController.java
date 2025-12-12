@@ -274,4 +274,13 @@ public class ProductosRestController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al reducir el stock: " + ex.getMessage());
 		}
 	}
+	
+	
+	@GetMapping("/productos/categoria/{categoriaId}")
+	public List<Producto> productosPorCategoria(@PathVariable Long categoriaId) {
+	    return productosService.findByCategoriaId(categoriaId);
+	}
+	
+	
+	
 }
